@@ -21,7 +21,15 @@ export type ScanCategory =
   | "flutter_cache"
   | "cocoapods_cache"
   | "composer_cache"
-  | "ide_caches";
+  | "ide_caches"
+  | "xcode_device_support"
+  | "xcode_archives"
+  | "browser_caches"
+  | "system_logs"
+  | "ios_backups"
+  | "trash"
+  | "old_downloads"
+  | "time_machine_snapshots";
 
 export interface ScanItem {
   id: string;

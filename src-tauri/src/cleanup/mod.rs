@@ -33,6 +33,9 @@ pub async fn execute_cleanup(
             ScanCategory::DockerBuildCache => executors::docker_cli::prune_build_cache().await,
             ScanCategory::XcodeSimulators => executors::xcode_cli::delete_simulators().await,
             ScanCategory::HomebrewCache => executors::homebrew_cli::cleanup().await,
+            ScanCategory::Trash => executors::macos_cli::empty_trash().await,
+            ScanCategory::OldDownloads => executors::macos_cli::delete_old_downloads().await,
+            ScanCategory::TimeMachineSnapshots => executors::macos_cli::delete_time_machine_snapshots().await,
             _ => executors::file_delete::delete_path(&item.path).await,
         };
 

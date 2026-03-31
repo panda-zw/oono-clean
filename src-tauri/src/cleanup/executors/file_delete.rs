@@ -49,6 +49,13 @@ const SAFE_PATTERNS: &[&str] = &[
     ".cocoapods",
     // PHP
     ".composer/cache",
+    // macOS system
+    "Library/Logs",
+    "Library/Developer/Xcode/iOS DeviceSupport",
+    "Library/Developer/Xcode/watchOS DeviceSupport",
+    "Library/Developer/Xcode/tvOS DeviceSupport",
+    "Library/Developer/Xcode/Archives",
+    "Library/Application Support/MobileSync/Backup",
 ];
 
 /// Check if the path contains a known safe directory component

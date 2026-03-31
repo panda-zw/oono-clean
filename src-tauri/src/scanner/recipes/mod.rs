@@ -1,6 +1,7 @@
 pub mod android;
 pub mod docker;
 pub mod go;
+pub mod macos;
 pub mod maven;
 pub mod misc;
 pub mod node;

@@ -42,6 +42,15 @@ pub async fn run_scan(app_handle: AppHandle) -> Result<ScanResult> {
     join_set.spawn(recipes::misc::scan_cocoapods_cache());
     join_set.spawn(recipes::misc::scan_composer_cache());
     join_set.spawn(recipes::misc::scan_ide_caches());
+    // macOS system data
+    join_set.spawn(recipes::macos::scan_xcode_device_support());
+    join_set.spawn(recipes::macos::scan_xcode_archives());
+    join_set.spawn(recipes::macos::scan_browser_caches());
+    join_set.spawn(recipes::macos::scan_system_logs());
+    join_set.spawn(recipes::macos::scan_ios_backups());
+    join_set.spawn(recipes::macos::scan_trash());
+    join_set.spawn(recipes::macos::scan_old_downloads());
+    join_set.spawn(recipes::macos::scan_time_machine_snapshots());
 
     let mut all_items: Vec<ScanItem> = Vec::new();
 

@@ -11,13 +11,16 @@ use crate::AppState;
 /// Validate that a scan item's path is plausible for its category.
 /// This re-checks paths from the database before cleanup to guard against tampering.
 fn is_path_plausible(path: &str, category: &ScanCategory) -> bool {
-    // Docker and Homebrew use CLI commands, not file paths — always plausible
+    // These use CLI commands or special paths, not direct file paths
     if matches!(
         category,
         ScanCategory::DockerImages
             | ScanCategory::DockerBuildCache
             | ScanCategory::HomebrewCache
             | ScanCategory::XcodeSimulators
+            | ScanCategory::Trash
+            | ScanCategory::OldDownloads
+            | ScanCategory::TimeMachineSnapshots
     ) {
         return true;
     }
@@ -110,6 +113,30 @@ fn is_path_plausible(path: &str, category: &ScanCategory) -> bool {
             rel.starts_with("Library/Application Support/Code/")
                 || rel.starts_with("Library/Application Support/Cursor/")
                 || rel.starts_with("Library/Caches/JetBrains")
+        }
+        ScanCategory::XcodeDeviceSupport => {
+            rel.starts_with("Library/Developer/Xcode/iOS DeviceSupport")
+                || rel.starts_with("Library/Developer/Xcode/watchOS DeviceSupport")
+                || rel.starts_with("Library/Developer/Xcode/tvOS DeviceSupport")
+        }
+        ScanCategory::XcodeArchives => {
+            rel.starts_with("Library/Developer/Xcode/Archives")
+        }
+        ScanCategory::BrowserCaches => {
+            rel.starts_with("Library/Caches/Google")
+                || rel.starts_with("Library/Caches/com.apple.Safari")
+                || rel.starts_with("Library/Caches/Firefox")
+                || rel.starts_with("Library/Caches/Arc")
+                || rel.starts_with("Library/Caches/com.brave.Browser")
+                || rel.starts_with("Library/Caches/com.microsoft.edgemac")
+                || rel.starts_with("Library/Caches/com.operasoftware.Opera")
+                || rel.starts_with("Library/Caches/com.vivaldi.Vivaldi")
+        }
+        ScanCategory::SystemLogs => {
+            rel.starts_with("Library/Logs")
+        }
+        ScanCategory::IosBackups => {
+            rel.starts_with("Library/Application Support/MobileSync/Backup")
         }
         _ => false,
     }

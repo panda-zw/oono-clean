@@ -83,6 +83,38 @@ const sections = [
         label: "IDE & Editors",
         desc: "VS Code, Cursor, and JetBrains IDE caches and workspace storage.",
       },
+      {
+        label: "Xcode Device Support",
+        desc: "Debug symbols for connected iOS/watchOS devices. Re-downloaded when reconnected.",
+      },
+      {
+        label: "Xcode Archives",
+        desc: "Archived app builds. Review before removing if you need older submissions.",
+      },
+      {
+        label: "Browser Caches",
+        desc: "Chrome, Safari, Firefox, Arc, Brave, Edge, and other browser caches.",
+      },
+      {
+        label: "System Logs",
+        desc: "Application and diagnostic log files in ~/Library/Logs.",
+      },
+      {
+        label: "iOS Device Backups",
+        desc: "Local iPhone/iPad backups. Check iCloud backup status before removing.",
+      },
+      {
+        label: "Trash",
+        desc: "Files already in your Trash that haven't been emptied.",
+      },
+      {
+        label: "Old Downloads",
+        desc: "Files in your Downloads folder older than 90 days.",
+      },
+      {
+        label: "Time Machine Snapshots",
+        desc: "Local Time Machine snapshots on this disk. New ones are created automatically.",
+      },
     ],
   },
   {

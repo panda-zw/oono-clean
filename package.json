@@ -1,16 +1,20 @@
 {
-  "name": "clear-space",
-  "version": "1.0.0",
+  "name": "onesweep",
+  "version": "0.1.0",
   "description": "Find and reclaim disk space on macOS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/panda-zw/oono-clean.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri"
   },
-  "keywords": [],
+  "keywords": ["macos", "disk-space", "cleanup", "tauri", "desktop-app"],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "packageManager": "pnpm@10.6.2",
   "dependencies": {
     "@tauri-apps/api": "^2.10.1",

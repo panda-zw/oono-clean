@@ -3,7 +3,8 @@ import { formatBytes } from "../lib/utils/format";
 import { CategoryCard } from "./CategoryCard";
 
 export function ScanView() {
-  const { result, isScanning } = useScanStore();
+  const { result, isScanning, selectedIds, selectAllGreen, clearSelection } =
+    useScanStore();
 
   if (isScanning) {
     return (
@@ -16,6 +17,11 @@ export function ScanView() {
 
   if (!result) return null;
 
+  const totalGreenItems = result.categories
+    .flatMap((c) => c.items)
+    .filter((i) => i.safety === "green").length;
+  const allSelected = selectedIds.size >= totalGreenItems && totalGreenItems > 0;
+
   return (
     <div className="scan-view">
       <div className="scan-summary">
@@ -26,9 +32,27 @@ export function ScanView() {
           </span>{" "}
           that can be safely freed
         </h2>
-        <p className="scan-summary__categories">
-          across {result.categories.length} categories
-        </p>
+        <div className="scan-summary__row">
+          <p className="scan-summary__categories">
+            across {result.categories.length} categories
+          </p>
+          <div className="scan-summary__actions">
+            <button
+              className="btn btn--secondary btn--sm"
+              onClick={selectAllGreen}
+              disabled={allSelected}
+            >
+              Select all
+            </button>
+            <button
+              className="btn btn--secondary btn--sm"
+              onClick={clearSelection}
+              disabled={selectedIds.size === 0}
+            >
+              Unselect all
+            </button>
+          </div>
+        </div>
       </div>
       <div className="scan-categories">
         {result.categories.map((cat) => (

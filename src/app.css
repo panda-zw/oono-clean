@@ -205,6 +205,11 @@ body {
   font-size: 15px;
 }
 
+.btn--sm {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: 12px;
+}
+
 /* Main content */
 .main {
   padding: var(--spacing-lg);
@@ -278,10 +283,21 @@ body {
   color: var(--color-green);
 }
 
+.scan-summary__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--spacing-xs);
+}
+
 .scan-summary__categories {
   color: var(--color-text-secondary);
   font-size: 14px;
-  margin-top: var(--spacing-xs);
+}
+
+.scan-summary__actions {
+  display: flex;
+  gap: var(--spacing-xs);
 }
 
 /* Category card */

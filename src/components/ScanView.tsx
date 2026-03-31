@@ -1,10 +1,49 @@
+import { useMemo, useState } from "react";
 import { useScanStore } from "../lib/stores/scan";
 import { formatBytes } from "../lib/utils/format";
+import type { CategoryResult, SafetyLevel } from "../lib/types";
 import { CategoryCard } from "./CategoryCard";
+
+type SafetyFilter = "all" | SafetyLevel;
 
 export function ScanView() {
   const { result, isScanning, selectedIds, selectAllGreen, clearSelection } =
     useScanStore();
+  const [search, setSearch] = useState("");
+  const [safetyFilter, setSafetyFilter] = useState<SafetyFilter>("all");
+
+  const filtered = useMemo(() => {
+    if (!result) return [];
+    const query = search.toLowerCase().trim();
+
+    return result.categories
+      .map((cat): CategoryResult | null => {
+        let items = cat.items;
+
+        if (safetyFilter !== "all") {
+          items = items.filter((i) => i.safety === safetyFilter);
+        }
+
+        if (query) {
+          items = items.filter(
+            (i) =>
+              i.display_name.toLowerCase().includes(query) ||
+              i.path.toLowerCase().includes(query) ||
+              i.description.toLowerCase().includes(query) ||
+              cat.display_name.toLowerCase().includes(query),
+          );
+        }
+
+        if (items.length === 0) return null;
+
+        return {
+          ...cat,
+          items,
+          total_bytes: items.reduce((sum, i) => sum + i.size_bytes, 0),
+        };
+      })
+      .filter((c): c is CategoryResult => c !== null);
+  }, [result, search, safetyFilter]);
 
   if (isScanning) {
     return (
@@ -20,7 +59,10 @@ export function ScanView() {
   const totalGreenItems = result.categories
     .flatMap((c) => c.items)
     .filter((i) => i.safety === "green").length;
-  const allSelected = selectedIds.size >= totalGreenItems && totalGreenItems > 0;
+  const allSelected =
+    selectedIds.size >= totalGreenItems && totalGreenItems > 0;
+
+  const isFiltering = search || safetyFilter !== "all";
 
   return (
     <div className="scan-view">
@@ -54,10 +96,44 @@ export function ScanView() {
           </div>
         </div>
       </div>
+
+      <div className="scan-toolbar">
+        <input
+          type="text"
+          className="scan-toolbar__search"
+          placeholder="Search items..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <div className="scan-toolbar__filters">
+          {(["all", "green", "yellow", "red"] as const).map((level) => (
+            <button
+              key={level}
+              className={`scan-toolbar__filter ${safetyFilter === level ? "active" : ""} ${level !== "all" ? `scan-toolbar__filter--${level}` : ""}`}
+              onClick={() => setSafetyFilter(level)}
+            >
+              {level === "all" ? "All" : level.charAt(0).toUpperCase() + level.slice(1)}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="scan-categories">
-        {result.categories.map((cat) => (
-          <CategoryCard key={cat.category} category={cat} />
-        ))}
+        {filtered.length === 0 ? (
+          <p className="scan-view__no-results">
+            No items match your {search ? "search" : "filter"}.
+          </p>
+        ) : (
+          filtered.map((cat) => (
+            <CategoryCard key={cat.category} category={cat} />
+          ))
+        )}
+        {isFiltering && filtered.length > 0 && (
+          <p className="scan-view__filter-note">
+            Showing {filtered.reduce((s, c) => s + c.items.length, 0)} items in{" "}
+            {filtered.length} categories
+          </p>
+        )}
       </div>
     </div>
   );

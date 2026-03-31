@@ -46,7 +46,7 @@ _Coming soon_
 
 ```bash
 # Clone the repo
-git clone https://github.com/panda-zw/oono-clean.git
+git clone https://github.com/panda-zw/one-sweep.git
 cd oono-clean
 
 # Install frontend dependencies

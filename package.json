@@ -4,7 +4,7 @@
   "description": "Find and reclaim disk space on macOS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/panda-zw/oono-clean.git"
+    "url": "https://github.com/panda-zw/one-sweep.git"
   },
   "scripts": {
     "dev": "vite",

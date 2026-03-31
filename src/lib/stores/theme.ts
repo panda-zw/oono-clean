@@ -8,7 +8,7 @@ interface ThemeState {
 }
 
 function getInitialTheme(): Theme {
-  const stored = localStorage.getItem("clearspace-theme");
+  const stored = localStorage.getItem("onesweep-theme");
   if (stored === "light" || stored === "dark") return stored;
   // Respect system preference
   if (window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
@@ -17,7 +17,7 @@ function getInitialTheme(): Theme {
 
 function applyTheme(theme: Theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("clearspace-theme", theme);
+  localStorage.setItem("onesweep-theme", theme);
 }
 
 export const useThemeStore = create<ThemeState>((set, get) => {

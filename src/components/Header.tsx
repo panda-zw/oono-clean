@@ -13,7 +13,12 @@ export function Header({ view, onViewChange }: Props) {
   return (
     <header className="header">
       <div className="header__left">
-        <h1 className="header__title">ClearSpace</h1>
+        <img
+          src="/logo.png"
+          alt="OneSweep"
+          className="header__logo"
+        />
+        <h1 className="header__title">OneSweep</h1>
       </div>
       <nav className="header__nav">
         <button

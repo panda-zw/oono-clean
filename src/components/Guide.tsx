@@ -4,7 +4,7 @@ const sections = [
     steps: [
       {
         heading: "Run a scan",
-        body: 'Click "Scan Now" in the top right corner. ClearSpace will search common locations on your Mac for caches, build artifacts, and other reclaimable files.',
+        body: 'Click "Scan Now" in the top right corner. OneSweep will search common locations on your Mac for caches, build artifacts, and other reclaimable files.',
       },
       {
         heading: "Review results",
@@ -58,7 +58,7 @@ const sections = [
       },
       {
         label: "Red - Be careful",
-        desc: "ClearSpace surfaces these for awareness but won't offer one-click deletion. These may contain data you care about.",
+        desc: "OneSweep surfaces these for awareness but won't offer one-click deletion. These may contain data you care about.",
       },
     ],
   },
@@ -75,7 +75,7 @@ const sections = [
       },
       {
         label: "Don't worry about mistakes",
-        desc: "Everything ClearSpace removes in the green tier is automatically regenerated. Deleting node_modules just means running npm install next time you open that project.",
+        desc: "Everything OneSweep removes in the green tier is automatically regenerated. Deleting node_modules just means running npm install next time you open that project.",
       },
     ],
   },
@@ -84,9 +84,9 @@ const sections = [
 export function Guide() {
   return (
     <div className="guide">
-      <h2>How to Use ClearSpace</h2>
+      <h2>How to Use OneSweep</h2>
       <p className="guide__intro">
-        ClearSpace finds the real space hogs on your Mac and lets you safely
+        OneSweep finds the real space hogs on your Mac and lets you safely
         reclaim storage without breaking anything.
       </p>
 

@@ -27,7 +27,7 @@ pub fn run() {
 
             let app_data_dir = app.path().app_data_dir()?;
             std::fs::create_dir_all(&app_data_dir)?;
-            let db_path = app_data_dir.join("onesweep.db");
+            let db_path = app_data_dir.join("onepurge.db");
             let conn = rusqlite::Connection::open(&db_path)
                 .expect("Failed to open database");
             db::run_migrations(&conn).expect("Failed to run migrations");

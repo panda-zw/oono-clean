@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a bug to help us improve OneSweep
+about: Report a bug to help us improve OnePurge
 title: ""
 labels: bug
 assignees: ""
@@ -23,4 +23,4 @@ If applicable, add screenshots.
 
 **Environment**
 - macOS version: [e.g. 15.4]
-- OneSweep version: [e.g. 0.1.0]
+- OnePurge version: [e.g. 0.1.0]

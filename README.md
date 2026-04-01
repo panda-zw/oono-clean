@@ -1,4 +1,4 @@
-# OneSweep
+# OnePurge
 
 A macOS desktop app that finds the real disk space hogs on your Mac and lets you safely reclaim storage without breaking anything.
 
@@ -11,7 +11,7 @@ A macOS desktop app that finds the real disk space hogs on your Mac and lets you
 
 macOS users, especially developers, lose hundreds of gigabytes to invisible clutter: simulator runtimes, Docker images, dependency caches, old IDE data, and build artifacts. Apple's built-in storage breakdown is vague ("System Data: 231 GB") and offers no way to act on it.
 
-OneSweep finds what's actually taking up space, explains it in plain language, and lets you clean it up safely.
+OnePurge finds what's actually taking up space, explains it in plain language, and lets you clean it up safely.
 
 ## What It Scans
 
@@ -87,8 +87,8 @@ _Coming soon_
 
 ```bash
 # Clone the repo
-git clone https://github.com/panda-zw/one-sweep.git
-cd one-sweep
+git clone https://github.com/panda-zw/one-purge.git
+cd one-purge
 
 # Install frontend dependencies
 pnpm install

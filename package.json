@@ -1,10 +1,10 @@
 {
-  "name": "onesweep",
+  "name": "onepurge",
   "version": "0.1.0",
   "description": "Find and reclaim disk space on macOS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/panda-zw/one-sweep.git"
+    "url": "https://github.com/panda-zw/one-purge.git"
   },
   "scripts": {
     "dev": "vite",

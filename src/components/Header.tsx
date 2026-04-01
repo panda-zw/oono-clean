@@ -15,10 +15,10 @@ export function Header({ view, onViewChange }: Props) {
       <div className="header__left">
         <img
           src="/logo.png"
-          alt="OneSweep"
+          alt="OnePurge"
           className="header__logo"
         />
-        <h1 className="header__title">OneSweep</h1>
+        <h1 className="header__title">OnePurge</h1>
       </div>
       <nav className="header__nav">
         <button

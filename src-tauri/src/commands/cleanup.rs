@@ -138,6 +138,32 @@ fn is_path_plausible(path: &str, category: &ScanCategory) -> bool {
         ScanCategory::IosBackups => {
             rel.starts_with("Library/Application Support/MobileSync/Backup")
         }
+        ScanCategory::Documents => {
+            // Any file under home that isn't one of the protected top-level
+            // folders themselves (matches delete_user_path's guardrail).
+            let comps: Vec<_> = rel.components().collect();
+            !comps.is_empty()
+                && !(comps.len() == 1
+                    && matches!(
+                        comps[0].as_os_str().to_str(),
+                        Some(
+                            "Library"
+                                | "Documents"
+                                | "Downloads"
+                                | "Desktop"
+                                | "Movies"
+                                | "Music"
+                                | "Pictures"
+                                | "Public"
+                                | "Applications"
+                        )
+                    ))
+        }
+        ScanCategory::AppData => {
+            rel.starts_with("Library/Application Support/")
+                || rel.starts_with("Library/Group Containers/")
+                || rel.starts_with("Library/Containers/")
+        }
         _ => false,
     }
 }
@@ -155,7 +181,7 @@ pub async fn start_cleanup(
         all_items
             .into_iter()
             .filter(|i| request.item_ids.contains(&i.id))
-            .filter(|i| i.safety == SafetyLevel::Green)
+            .filter(|i| i.safety != SafetyLevel::Red)
             .filter(|i| is_path_plausible(&i.path, &i.category))
             .collect::<Vec<_>>()
     };

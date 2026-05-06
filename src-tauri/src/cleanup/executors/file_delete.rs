@@ -129,3 +129,66 @@ pub async fn delete_path(path: &str) -> Result<()> {
     }
     Ok(())
 }
+
+/// Top-level home folders we never delete in their entirety, even when the
+/// user selects them. Individual children are fine.
+const PROTECTED_TOPLEVEL: &[&str] = &[
+    "Library",
+    "Documents",
+    "Downloads",
+    "Desktop",
+    "Movies",
+    "Music",
+    "Pictures",
+    "Public",
+    "Applications",
+];
+
+/// Delete a user-selected file or directory. Used for categories where the
+/// user explicitly opts in to each item (Documents, App Data) and the
+/// safe-pattern allowlist used by `delete_path` would be too restrictive.
+/// Still enforces: must be under home, must not be home itself, must not be
+/// one of the protected top-level home folders.
+pub async fn delete_user_path(path: &str) -> Result<()> {
+    let path = PathBuf::from(path);
+    if !path.exists() {
+        return Ok(()); // Already gone
+    }
+
+    let canonical = path
+        .canonicalize()
+        .map_err(|e| anyhow::anyhow!("Cannot resolve path {}: {}", path.display(), e))?;
+
+    let home = dirs::home_dir()
+        .ok_or_else(|| anyhow::anyhow!("Cannot determine home directory"))?;
+
+    if !canonical.starts_with(&home) {
+        anyhow::bail!(
+            "Refusing to delete path outside home directory: {}",
+            canonical.display()
+        );
+    }
+
+    if canonical == home {
+        anyhow::bail!("Refusing to delete the home directory");
+    }
+
+    let relative = canonical
+        .strip_prefix(&home)
+        .map_err(|_| anyhow::anyhow!("Path is not relative to home"))?;
+
+    let components: Vec<_> = relative.components().collect();
+    if components.len() == 1 {
+        let name = components[0].as_os_str().to_string_lossy();
+        if PROTECTED_TOPLEVEL.iter().any(|p| *p == name) {
+            anyhow::bail!("Refusing to delete protected top-level folder: {}", name);
+        }
+    }
+
+    if canonical.is_dir() {
+        tokio::fs::remove_dir_all(&canonical).await?;
+    } else {
+        tokio::fs::remove_file(&canonical).await?;
+    }
+    Ok(())
+}

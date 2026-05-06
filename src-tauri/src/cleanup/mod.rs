@@ -36,6 +36,7 @@ pub async fn execute_cleanup(
             ScanCategory::Trash => executors::macos_cli::empty_trash().await,
             ScanCategory::OldDownloads => executors::macos_cli::delete_old_downloads().await,
             ScanCategory::TimeMachineSnapshots => executors::macos_cli::delete_time_machine_snapshots().await,
+            ScanCategory::Documents | ScanCategory::AppData => executors::file_delete::delete_user_path(&item.path).await,
             _ => executors::file_delete::delete_path(&item.path).await,
         };
 

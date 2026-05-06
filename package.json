@@ -1,6 +1,6 @@
 {
   "name": "onepurge",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Find and reclaim disk space on macOS",
   "repository": {
     "type": "git",
@@ -10,7 +10,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "tauri:build": "export $(cat .env | xargs) && tauri build"
   },
   "keywords": [
     "macos",

@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "OnePurge",
-  "version": "0.1.0",
-  "identifier": "com.onepurge.app",
+  "version": "0.2.0",
+  "identifier": "com.onepurge.desktop",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:1420",
